@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>¿Cómo te sientes? 💭</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="page-transitions.css">
+<script src="page-transitions.js"></script>
 <style>
 :root{
   --bg:#FDF6F0;--surface:#fff;
@@ -52,7 +54,7 @@ html,body{height:100%;background:var(--bg);font-family:'DM Sans',sans-serif;colo
 .msg-card{background:var(--surface);border-radius:14px;padding:1.1rem 1.3rem;box-shadow:var(--shadow);cursor:pointer;transition:transform .15s;}
 .msg-card:active{transform:scale(.98);}
 .msg-card-num{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:.3rem;}
-.msg-card-preview{font-family:'DM Serif Display',serif;font-style:italic;font-size:.95rem;color:var(--text);line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.msg-card-preview{font-family:'DM Serif Display',serif;font-style:italic;font-size:.95rem;color:var(--text);line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .msg-card-arrow{font-size:.75rem;color:var(--text3);margin-top:.5rem;}
 
 /* ── MSG DETAIL ── */
@@ -88,7 +90,7 @@ html,body{height:100%;background:var(--bg);font-family:'DM Sans',sans-serif;colo
         <button class="mood-btn m-happy"   onclick="openMood('happy')"><span class="mood-emoji">😊</span><span class="mood-name">Feliz</span><span class="mood-hint">Cuando todo va bien</span></button>
         <button class="mood-btn m-sad"     onclick="openMood('sad')"><span class="mood-emoji">😔</span><span class="mood-name">Triste</span><span class="mood-hint">Cuando algo duele</span></button>
         <button class="mood-btn m-anxious" onclick="openMood('anxious')"><span class="mood-emoji">😰</span><span class="mood-name">Ansiosa</span><span class="mood-hint">Cuando todo agobia</span></button>
-        <button class="mood-btn m-insecure"onclick="openMood('insecure')"><span class="mood-emoji">🥺</span><span class="mood-name">Insegura</span><span class="mood-hint">Cuando el miedo aparece</span></button>
+        <button class="mood-btn m-insecure" onclick="openMood('insecure')"><span class="mood-emoji">🥺</span><span class="mood-name">Insegura</span><span class="mood-hint">Cuando el miedo aparece</span></button>
         <button class="mood-btn m-tired"   onclick="openMood('tired')"><span class="mood-emoji">😴</span><span class="mood-name">Cansada</span><span class="mood-hint">Sin energía</span></button>
         <button class="mood-btn m-miss"    onclick="openMood('miss')"><span class="mood-emoji">💕</span><span class="mood-name">Me extrañas</span><span class="mood-hint">Cuando quieres hablar</span></button>
         <button class="mood-btn m-angry"   onclick="openMood('angry')"><span class="mood-emoji">😤</span><span class="mood-name">Enojada</span><span class="mood-hint">Conmigo (¿?), con el mundo, con quien sea</span></button>
@@ -170,55 +172,55 @@ const MOODS = {
     {body:['Para terminar, solo quiero recordarte que ninguna tormenta dura para siempre, estarás bien mientras sea algo que yo pueda solucionar, y si no.. Estaré ahí para ti sieeeempre ... Sé que ahorita se siente todo muy pesado, pero confío plenamente en ti y sé lo fuerte que eres, aunque ahorita no lo sientas así. No tienes que solucionar nada hoy asi que... por ahora solo descansa, apaga la cabeza un ratito y deja que el día termine. Mañana será un nuevo comienzo y, pasito a pasito, todo va a volver a acomodarse. Aquí voy a estar yo para verlo y para celebrar cuando vuelvas a sonreír... Ah, y por cierto, voy a ir actualizando esta app para ponerle más cositas y detalles, así que este rinconcito siempre va a ir creciendo contigo. Te amo un montón, mi vida...'],sig:'Te amo mucho :3 ✦'},
   ]},
   anxious:{name:'Ansiosa',emoji:'😰',color:'linear-gradient(135deg,#EAD8F8,#C9B8E8)',msgs:[
-    {body:['[Empieza reconociendo lo que siente. No la minimices — valídala.]'],sig:'Aquí ✦'},
-    {body:['[Un mensaje para bajar el ritmo. Que respire. No tiene que resolverlo todo ya.]'],sig:'✦'},
-    {body:['[Cuéntale algo concreto que pueden hacer juntos cuando la ansiedad aparece.]'],sig:'Tuyo ✦'},
-    {body:['[Algo sobre que la ansiedad miente — la realidad es más amable de lo que parece.]'],sig:'✦'},
-    {body:['[Un recuerdo de cuando ella pudo con algo difícil. Recuérdaselo.]'],sig:'Con todo ✦'},
-    {body:['[Dile que puede escribirte cuando la ansiedad llega. No tiene que manejarlo sola.]'],sig:'✦'},
-    {body:['[Algo sobre lo fuerte que es aunque no lo sienta ahora mismo.]'],sig:'Tuyo ✦'},
-    {body:['[Un mensaje sobre que el futuro que le preocupa raramente es tan malo como lo imagina.]'],sig:'✦'},
-    {body:['[Algo que tú también haces cuando estás agobiado — para que no se sienta rara.]'],sig:'✦'},
-    {body:['[Cuéntale algo pequeño y concreto en lo que puede enfocarse ahora mismo.]'],sig:'Aquí ✦'},
-    {body:['[Un mensaje sobre que no tiene que ser fuerte para ti.]'],sig:'✦'},
-    {body:['[Algo sobre lo que sí es cierto y seguro en este momento — anclarla.]'],sig:'Tuyo ✦'},
-    {body:['[Cuéntale que la quieres en todas sus versiones, incluyendo la ansiosa.]'],sig:'Con todo ✦'},
-    {body:['[Algo que te gusta de cómo maneja las cosas difíciles, aunque ella no lo vea.]'],sig:'✦'},
-    {body:['[Mensaje 15: cuando pase este momento, ella seguirá siendo ella. Y tú seguirás ahí.]'],sig:'Siempre tuyo ✦'},
+    {body:['Hola mi amor... si entraste aquí es porque la cabeza está yendo a mil y sientes que no puedes parar de pensar. Quiero que sepas algo antes que nada.. lo que sientes es completamente válido. No te voy a decir que no te preocupes o que todo está bien, porque sé que cuando la ansiedad aparece, tal vez esas palabras no ayudan mucho :c . Solo quiero que sepas que te veo, que entiendo que estás pasando algo difícil, y que aquí estoy mi amor.'],sig:'Aquí estaré siempre ✦'},
+    {body:['Wait wait, respira despacio. No tienes que resolver nada ahora mismo mi amor. La cabeza a veces nos engaña y nos hace sentir que todo es urgente, que si no encontramos la solución ya mismo algo va a salir mal... pero no es así. Date permiso de bajar el ritmo un ratito. Un respiro. Luego otro. No hay prisa, y yo no me voy a ningún lado.'],sig:'Respira conmigo... ✦'},
+    {body:['Sabes qué podemos hacer cuando te sientas así¿? Ponemos una serie de fondo, nos quedamos en vc aunque no hablemos mucho, y simplemente compartimos el momento. No tienes que estar animada ni decir nada interesante. Solo existir al otro lado de la llamada ya me basta. Eso también es estar juntos, y a mí me encanta un montón jej.'],sig:'Llámame cuando quieras :b ✦'},
+    {body:['La ansiedad miente mi vida. Te hace creer que lo peor es lo más probable, que todo va a salir mal, que no puedes con esto... pero no es verdad. La realidad casi siempre es más amable de lo que la cabeza ansiosa lo ve. Lo que estás sintiendo ahora es real, pues sim, pero las catástrofes que te imaginas casi nunca llegan. Confía un poquito más en ti misma.'],sig:'Confío en ti más de lo que crees ✦'},
+    {body:['Te acuerdas de todas las veces que sentiste que no ibas a poder con algo y al final pudiste??¿¿ Pues esom. Eres mucho más capaz de lo que tu cabeza te dice cuando está en modo exótica.. Has podido con cosas difíciles antes, y vas a poder con esto también. No te subestimes mi amor. Yo he visto de lo que eres capaz y me dejas sin palabras.'],sig:'Siempre he confiado en ti ✦'},
+    {body:['Oye mi amor, cuchame... si la ansiedad te golpea fuerte en cualquier momento, escríbeme. No importa la hora, no importa si estoy en clases o jugando LoL, te responderé. No tienes que manejarlo sola ni esperar a que pase para contármelo después. Quiero estar ahí para ti, aunque sea solo para decirte que ya va a pasar porque no soy tan bueno dando consejos xd. Pero para eso estoy yo.'],sig:'Escríbeme, siempre sim? :c ✦'},
+    {body:['Aunque ahorita no lo sientas así, eres una chica increíblemente fuerte. No el tipo de fuerte que nunca se rompe, sino el tipo que aunque rompa se vuelve a armar. He visto cómo te levantas, cómo le echas ganas a tus cosas incluso cuando cuesta. Eso requiere una valentía enorme. No dejes que un momento de ansiedad te haga olvidar lo que eres.'],sig:'Eres más fuerte de lo que crees ✦'},
+    {body:['Casi nunca el futuro que nos da miedo resulta ser tan horrible como lo imaginamos. La cabesita exótica muchas veces empeora, amplifica, las... pero la realidad tiene la costumbre de ser mucho más manejable. No digo que no vaya a haber cosas difíciles, pero sí te digo que cuando lleguen, las vamos a enfrentar juntos. No tienes que resolver el futuro hoy…'],sig:'Enfrentaremos el futuro juntos :3✦'},
+    {body:['Te cuento alguito.. a mí también me agobia la cabeza a veces (Mucho) . Me pasa cuando tengo mil cosas pendientes de la universidad o cuando siento que no estoy avanzando lo suficiente. Lo que más me ayuda es ponerme a jugar LoLcito, ponerme los audífonos, escuchar música a todo volumen y dejar que el tiempo pase sin presionarme. Te lo cuento para que veas que no estás sola en esto. Todos tenemos esos momentos.'],sig:'Somos un equipo, recuérdalo ✦'},
+    {body:['Oye mi amor.. en este momento exacto, qué es lo más pequeño que puedes hacer para sentirte un poquito mejor¿? No te pido que soluciones todo, solo una cosita chiquita. Tal vez tomar agua, ponerte una canción que te guste, salir un momento al parquecito (conmigo), o simplemente cerrar los ojos dos minutos. A veces el primer paso es el más importante.'],sig:'Pasito a pasito ✦'},
+    {body:['No tienes que ser fuerte conmigo mi amor. De verdad. Puedes llegar hecha pedazos, sin ganas de nada, y yo voy a seguir aquí igual. No necesito que estés bien para quererte. Te quiero completa, con tus días buenos y con tus momentos de ansiedad incluidos. Aquí no tienes que aparentar nada sim?.'],sig:'Aquí puedes ser tú :3 ✦'},
+    {body:['Aver dime.. Qué es cierto y seguro ahorita mismo¿? Estás respirando. Estás leyendo esto. Yo te amo mucho. Esas tres cosas son reales y no van a cambiar sin importar lo que pase. A veces cuando la ansiedad llega fuerte ayuda volver a lo que pasa en realidad, a lo que sí está ahí. Y lo que sí está ahí, entre otras cosas, soy yo.'],sig:'Mi amor por ti es muy real ✦'},
+    {body:['Te quiero en todas tus versiones, incluyendo esta. La Nicole ansiosa, la que piensa demasiado, la que a veces siente que no puede... también es la Nicole que elegí. No solo aparezco cuando todo está bien. Estoy aquí exactamente ahora, que es cuando más importa…'],sig:'Te elijo siempre, en todo momento ✦'},
+    {body:['Admiro demasiado cómo manejas las cosas difíciles, aunque tú no lo veas así. Tal vez sientes que no estás pudiendo, pero desde afuera yo veo a alguien que sigue adelante aunque le cueste, que busca soluciones aunque tenga miedo… Alguien que no se rinde. Eso es enorme mi amor. No lo minimices.'],sig:'Te admiro más de lo que crees ✦'},
+    {body:['Cuando pase este momento (y va a pasar), vas a seguir siendo tú. La misma chica tan increíble, tierna y fuerte que me tiene completamente enamorado. La ansiedad es solo un momento, no es quien eres. Y cuando se vaya, aquí voy a estar yo, exactamente en el mismo lugar, feliz de tenerte conmigo.'],sig:'Siempre estaré feliz de tenerte ✦'},
   ]},
   insecure:{name:'Insegura',emoji:'🥺',color:'linear-gradient(135deg,#F8D6E8,#F4A7B9)',msgs:[
-    {body:['[Empieza con algo directo: "Eres suficiente." — luego dile por qué lo crees de verdad.]'],sig:'Tuyo ✦'},
-    {body:['[Cuéntale una cosa específica de ella que tú ves y que ella quizás no.]'],sig:'✦'},
-    {body:['[Un mensaje sobre que sus inseguridades no te alejan — te acercan.]'],sig:'Con todo ✦'},
-    {body:['[Algo sobre que no la amas a pesar de sus miedos, sino con ellos.]'],sig:'✦'},
-    {body:['[Recuérdale el momento en que se abrió contigo por primera vez — lo valiente que fue.]'],sig:'Tuyo ✦'},
-    {body:['[Un mensaje sobre que no tiene que competir con nadie para ser elegida por ti.]'],sig:'✦'},
-    {body:['[Algo sobre lo que más te gusta de ella — algo que ella probablemente subestime.]'],sig:'Siempre ✦'},
-    {body:['[Cuéntale que el hecho de que le importe tanto cómo te sientes es señal de cuánto te quiere.]'],sig:'✦'},
-    {body:['[Un mensaje sobre que el miedo a perderlo es real — pero que tú también la estás eligiendo cada día.]'],sig:'Tuyo ✦'},
-    {body:['[Algo sobre sus inseguridades específicas y cómo las ves tú desde afuera.]'],sig:'✦'},
-    {body:['[Un mensaje sobre que no tiene que ganarse tu amor. Ya lo tiene.]'],sig:'Con todo ✦'},
-    {body:['[Cuéntale algo en lo que tú también eres inseguro — para que sepa que no está sola.]'],sig:'✦'},
-    {body:['[Algo sobre que la versión de ella que duda también es la que más confía en ti.]'],sig:'Tuyo ✦'},
-    {body:['[Un mensaje sobre el futuro: que quieres seguir ahí cuando las inseguridades aparezcan.]'],sig:'✦'},
-    {body:['[Mensaje 15: algo que la deje sintiéndose vista, elegida y querida. Sin dudas.]'],sig:'Siempre tuyo ✦'},
+    {body:['Eres suficiente mi amor. No a medias, no con condiciones, no "a pesar de"… Eres suficiente tal como eres hoy. Sé que la cabeza a veces no te deja creerlo, pero quiero que te graben estas palabras.. Te elegí a ti. No a una versión mejorada de ti, no a ti cuando estés "mejor". ..A ti, ahora mismo.'],sig:'Eres más que suficiente ✦'},
+    {body:['Me encanta que sea tan obvio lo mucho que nos cuidamos. La forma en que te preocupas por mí me hace sentir demasiado especial y querido de una forma única. Me amas con una intensidad enorme y me cuidas con un corazón que no tiene fondo. Es de las cosas más hermosas de ti, y me enamora cada día más..'],sig:'Jamás lo cambiaria por nada.. ✦'},
+    {body:['Tus inseguridades no me alejan. Al contrario. Cada vez que me las compartes, me acercan más a ti, porque significa que confías mucho en mí. Y eso, para mí, vale más que cualquier otra cosa. No tengo miedo de tus miedos. Los quiero porque son parte de ti.'],sig:'Me acercan a ti, deberías contármelas más :b ✦'},
+    {body:['No te amo a pesar de tus inseguridades o tus miedos. Te amo con ellos. Son parte de la tú real, de la que existe más allá de las apariencias, y esa es la chica que me tiene completamente enamorado. No necesitas esconderlos conmigo. Aquí puedes ser todo lo que eres.'],sig:'Con todo y tus mieditos, te elijo ✦'},
+    {body:['Te acuerdas de esa primera noche en el cumpleaños de Joao¿? Tú no eres de abrirte fácilmente con cualquier persona, pero esa noche, conmigo, lo hiciste. Eso requirió valentía, aunque no lo hayas sentido así… Desde ese momento supe que eras alguien especial… Y no me he equivocado ni un solo día.'],sig:'Desde esa noche lo supe ✦'},
+    {body:['No tienes que competir con nadie para ser elegida por mí mi amor. No hay nadie con quien compararte, no hay un estándar que alcanzar… Ya eres la persona que quiero a mi lado. No porque seas perfecta (Lo eres), sino porque eres tú, y eso es exactamente lo que busco.'],sig:'Ya te elegí, sin condiciones ✦'},
+    {body:['Una de las cosas que más me gusta de ti y que creo que tú subestimas un montón es lo empática que eres. La forma en que entiendes a las personas, en que te importa de verdad cómo se sienten los demás... eso no es algo común. Es algo que me parece increíble en ti y que me hace admirarte muchísimo.'],sig:'Eso me enamora de ti ✦'},
+    {body:['Que te importe tanto cómo me siento, que pienses en mí, que te preocupes por nuestra relación... eso no es inseguridad solamente. También es amor. Es que te importo. Y que te importe tanto me dice lo mucho que me quieres, y eso me llena el corazón completo...'],sig:'Tu amor me llena el corazonsito :b ✦'},
+    {body:['Sé que a veces tienes miedo de perderme. Y entiendo ese miedo, de verdad. Pero quiero que sepas algo.. Yo también te estoy eligiendo a ti cada día. No es solo que estés conmigo porque sí. Es que decido estar aquí, contigo, porque quiero. Ese miedo que sientes... Borralo con la idea de que yo no me voy JAMÁS.'],sig:'Es mi pinky promise :b ✦'},
+    {body:['A mí también me dan inseguridades mi amor :c . A veces siento que no soy lo suficientemente bueno, que podría hacer más, que no estoy donde debería estar todavía. Te lo cuento para que veas que no estás sola en esto. Todos cargamos algo… La diferencia es que nosotros nos lo contamos mi vida, y eso nos hace más fuertes juntos.'],sig:'Juntos somos más fuertes ✦'},
+    {body:['No tienes que ganarte mi amor, corazón. Ya lo tienes. No hay nada que hacer, nada que demostrar, ningún examen que pasar. Mi amor por ti no es algo que se gana ni se pierde. Está ahí, contigo, sin importar el día que sea ni cómo estés.'],sig:'Mi amor no tiene condiciones ✦'},
+    {body:['La versión de ti que duda, que tiene miedo, que se siente insegura... también es la que más confía en mí. Porque me la muestra. Y eso, para mí, es lo más valioso que puedes darme. Más que cualquier otra cosa: que confíes en mí con lo que más te cuesta.'],sig:'Gracias por confiar en mí ✦'},
+    {body:['Cuando te veo insegura de algo, no pienso menos de ti... Pienso en lo valiente que eres por seguir adelante aunque tengas miedo. En lo mucho que te esfuerzas. En lo enorme que es tu corazón. Eso es lo que veo yo desde afuera, aunque por dentro todo se sienta diferente.'],sig:'Desde afuera te veo brillar ✦'},
+    {body:['Quiero seguir estando aquí cuando las inseguridades aparezcan… Pero no porque tenga que estarlo, sino porque quiero estar ahí contigo mi vida. Porque elegí estar en los buenos momentos y también en estos. Porque una relación de verdad no es solo celebrar lo bonito, sino también acompañarse cuando cuesta. Y yo quiero acompañarte siempre.'],sig:'Para eso estamos juntos ✦'},
+    {body:['Y ya bueno jsjsj para cerrar esto eres vista, elegida y querida. Hoy, mañana y siempre. No a pesar de cómo eres, sino exactamente porque eres tú. No existe versión de ti que no me encante. Y nada, absolutamente nada, va a cambiar eso.'],sig:'Tiamooo ✦'},
   ]},
   tired:{name:'Cansada',emoji:'😴',color:'linear-gradient(135deg,#D6F0E8,#C8E6DA)',msgs:[
-    {body:['[Empieza dándole permiso de descansar. No tiene que producir ni estar bien.]'],sig:'Aquí ✦'},
-    {body:['[Un mensaje sobre que el cansancio también es válido.]'],sig:'✦'},
-    {body:['[Algo sobre lo mucho que ella hace — y por qué tiene todo el derecho de estar cansada.]'],sig:'Tuyo ✦'},
-    {body:['[Cuéntale algo que harías para cuidarla si estuvieras con ella ahora mismo.]'],sig:'✦'},
-    {body:['[Un mensaje sobre que puede apagarse un rato. El mundo puede esperar.]'],sig:'Con todo ✦'},
-    {body:['[Algo sobre quedarse dormida en Discord — con cariño, que le encante leerlo.]'],sig:'✦'},
-    {body:['[Cuéntale que su descanso también es importante para ti.]'],sig:'Tuyo ✦'},
-    {body:['[Algo pequeño y cálido — no para motivarla, solo para acompañarla.]'],sig:'✦'},
-    {body:['[Un mensaje sobre que no tiene que responder rápido ni estar activa. Que descanse.]'],sig:'Aquí ✦'},
-    {body:['[Algo sobre que le guardarás conversación para cuando tenga energía.]'],sig:'✦'},
-    {body:['[Cuéntale una cosa que te gusta de ella cuando está relajada y sin filtro.]'],sig:'Tuyo ✦'},
-    {body:['[Un mensaje sobre el valor de quedarse quieta. No siempre hay que hacer algo.]'],sig:'✦'},
-    {body:['[Algo sobre que el cansancio pasa — y cuando pase, ahí estarás con ella.]'],sig:'Con todo ✦'},
-    {body:['[Cuéntale algo que harían juntos cuando ella tenga energía de nuevo.]'],sig:'✦'},
-    {body:['[Mensaje 15: "Duerme. Yo no me voy a ningún lado." — con tus palabras.]'],sig:'Siempre tuyo ✦'},
+    {body:['Oye para. Respira… No tienes que hacer nada ahorita mismo. No tienes que estar productiva, ni animada, ni disponible. Date permiso de simplemente existir un ratito sin presión. El mundo puede esperar. Yo puedo esperar. Descansa, mi amor.'],sig:'Todos pueden esperar ✦'},
+    {body:['El cansancio también es válido… No siempre hay que tener energía, no siempre hay que poder con todo. A veces el cuerpo y la cabeza simplemente dicen yabasta, y hay que escucharlos. No te exijas más de lo que puedes dar hoy… Ya es suficiente con lo que hiciste.'],sig:'Ya hiciste suficiente hoy ✦'},
+    {body:['Sé que le metes muchísimo esfuerzo a tus cosas mi amor. Le echas ganas incluso cuando estás muy cansadita, y eso requiere una fuerza enorme que quizás tú ya no sientes porque estás acostumbrada a dársela a todo. Pero yo lo veo. Y por eso mismo tienes todo el derecho del mundo de estar cansada hoy, ujum...'],sig:'Te lo mereces, descansa ✦'},
+    {body:['Si pudiera estar ahí ahorita mismo, lo primero que haría sería decirte que te acuestes, ponerte una mantita encima y quedarse a tu lado sin decir nada. Te haría masajitos en la cabeza hasta que te quedases dormida. No puedo estar físicamente, pero imagínate esa escena. Porque mis ganas de cuidarte sí están contigo ahora mismo… :c'],sig:'Ojalá poder estar ahí ✦'},
+    {body:['Apaga un ratito mi vida. El mundo no va a dejar de girar porque tú te tomes un descanso. Las cosas pendientes pueden esperar. Lo que no puede esperar es tu cuerpo cuando te pide parar. Escúchalo... Date ese permiso sin culpa.'],sig:'El mundo puede esperar ✦'},
+    {body:['No sé si sabes lo tierna que te ves cuando te quedas dormida en vc jksjks... La pantalla se queda en silencio, ya no hay respuestas, y yo sé exactamente lo que pasó… Y en vez de molestarme, tlj que me da una ternura enorme. Me quedo un rato más en la llamada solo por si acaso, escuchando. Es uno de mis momentos favoritos contigo, aunque tú no lo sepas...'],sig:'No cambiaría esos momentos por nadanadanadanada✦'},
+    {body:['Tu descanso también importa para mí, no solo el tuyo. Cuando estás bien descansada, eres más tú… Y yo quiero que seas tú completa, no una versión agotada de ti que sigue adelante a pura fuerza de voluntad… Cuídate para ti, pero también sabe que cuando te cuidas, me cuidas a mí también.'],sig:'Tu bienestar es importante para mi✦'},
+    {body:['No te voy a pedir que estés bien ni que tengas energía. Solo quiero que sepas que aquí estoy, sin expectativas, sin prisa. Si quieres hablar, hablamos. Si quieres silencio, silencio. Si quieres que ponga algo de fondo mientras descansas, lo pongo. Solo dime qué necesitas…'],sig:'Hagamos vc y te hablo de cualquier cosa :3 ✦'},
+    {body:['No tienes que responderme rápido cuando estás cansada. No tienes que estar activa ni disponible. De verdad, el chat puede esperar. Si necesitas desconectarte un rato completo, hazlo. Yo voy a estar aquí cuando vuelvas, exactamente igual que antes.'],sig:'Cuando vuelvas, aquí estaré.. ✦'},
+    {body:['Guardo conversación para cuando tengas energía, te lo juro jksjks. Tengo mil cosas que contarte, cosas del día, tonterías del LoL, memes que sé que te van a dar risa... pero todo eso puede esperar. Primero tú. Después el resto.'],sig:'Probablemente solo sea sobre LoL ✦'},
+    {body:['Me encanta verte relajada y sin filtro, cuando no estás pensando en cómo lucir ni en qué decir. Esa versión de ti en pijama, despeinada y tranquila en confianza cuando vienes a mi casita jsjks... es una de mis favoritas. No cambiaría por nada el poder verte así de cómoda conmigo.'],sig:'Esa versión tuya me encanta uwu ✦'},
+    {body:['No siempre hay que hacer algo… A veces el mayor acto de amor propio es quedarse quieta y no hacer nada. Descansar también es productivo, aunque no lo parezca. Deja de presionarte y date el permiso de simplemente estar..'],sig:'Quedate tiesa si eso hace falta skjsk.. ✦'},
+    {body:['Este cansancio va a pasar, mi amor. No dura para siempre. Mañana o pasado vas a volver a tener energía, y cuando eso pase, ahí voy a estar yo para celebrarlo contigo. Pero hoy, descansa. Sin culpa… Sin prisa.'],sig:'Me muero de ganas por verte otra vez..✦'},
+    {body:['Cuando tengas energía de nuevo, hay que hacemos algo juntos :b .. Me da igual qué. Podemos ver la siguiente temporada de lo que estemos viendo, hablar por horas de cualquier tontería, o simplemente quedarnos en vc sin hacer nada especial. Solo quiero compartir ese momento contigo cuando estés lista.'],sig:'Te espero con ganas ✦'},
+    {body:['Duerme, mi vida. Yo no me voy a ningún lado. Cuando despiertes, aquí voy a estar yo, con el mismo amor de siempre y con mil cosas que contarte. Descansa tranquila. Buenas noches si es de noche, y si no, buena siesta jksjks. Te amo.'],sig:'Te amooooo✦'},
   ]},
   miss:{name:'Me extrañas',emoji:'💕',color:'linear-gradient(135deg,#F8E0EC,#FDDCCC)',msgs:[
     {body:['No te imaginas cuánto te extraño yo también mi vida... Así, directo y sin nada mas que decir. No hay un solo momento del día en el que no me haga falta tenerte cerca, escuchar tu risa o simplemente estar a tu lado. De verdad se siente un vacío enorme en la cabeza y en el pecho cuando no estás conmigo...'],sig:'Testranio :c ✦'},
@@ -238,21 +240,21 @@ const MOODS = {
     {body:['[Mensaje 15: algo que la haga querer escribirte ahora mismo.]'],sig:'Siempre tuyo ✦'},
   ]},
   angry:{name:'Enojada',emoji:'😤',color:'linear-gradient(135deg,#F8D6D6,#F4B8B8)',msgs:[
-    {body:['[Empieza sin juzgarla. Valida primero. "Tienes razón de estar enojada."]'],sig:'Aquí ✦'},
-    {body:['[Si está enojada con él: reconoce honestamente que puede equivocarse.]'],sig:'✦'},
-    {body:['[Si está enojada con el mundo: algo que la haga sentir que tiene a alguien de su lado.]'],sig:'Con todo ✦'},
-    {body:['[Un mensaje sobre que puede enojarse. Que eso también está permitido.]'],sig:'✦'},
-    {body:['[Cuéntale que no tiene que contener el enojo para protegerlo.]'],sig:'Tuyo ✦'},
-    {body:['[Algo sobre que el enojo también es una forma de que algo le importe.]'],sig:'✦'},
-    {body:['[Un mensaje sobre que después del enojo, él sigue ahí — sin rencor.]'],sig:'Aquí ✦'},
-    {body:['[Algo que alivie un poco la tensión — con cuidado de no minimizar.]'],sig:'✦'},
-    {body:['[Algo sobre que puede decirle lo que siente. Que él prefiere saberlo.]'],sig:'Tuyo ✦'},
-    {body:['[Un mensaje sobre que pelear no significa que algo está mal entre los dos.]'],sig:'✦'},
-    {body:['[Cuéntale que la quiere incluso cuando está enojada con él — especialmente entonces.]'],sig:'Con todo ✦'},
-    {body:['[Algo sobre cómo resolverían las cosas juntos — que él quiere entenderla.]'],sig:'✦'},
-    {body:['[Un mensaje sobre que no tiene que tragarse nada. Que hable, que él escucha.]'],sig:'Tuyo ✦'},
-    {body:['[Cuéntale algo que él haría para arreglar las cosas — concreto y real.]'],sig:'✦'},
-    {body:['[Mensaje 15: "Sigo aquí. Eso no cambia." — con tus palabras.]'],sig:'Siempre tuyo ✦'},
+    {body:['Oye.. tienes razón de estar enojada. No voy a decirte que te calmes ni que no es para tanto, porque si te sientes así es por algo. Lo que sientes es válido y tiene todo el derecho de existir. Solo quiero que sepas que estoy aquí, escuchándote, sin juzgarte.'],sig:'Aquí estaré escuchándote ✦'},
+    {body:['Si estás enojada conmigo, te escucho… De verdad. Puedo equivocarme, puedo meter la pata, y si lo hice quiero saberlo para poder arreglarlo :,cc . No me digas que todo "está bien" si no lo está. Prefiero mil veces que me digas lo que sientes a que te lo guardes y te duela sola.'],sig:'Dímelo, prefiero saberlo ✦'},
+    {body:['Y si estás enojada con el mundo, con algo que pasó, con una situación que no tiene que ver conmigo... también estoy aquí. En ese caso no soy el problema, soy de tu equipo :b. Y los equipos se apoyan. Cuéntame qué pasó y lo solucionamos mientras vemos alguito o te cuento mis chistes exoticos juntos.'],sig:'Soy tu equipo, siempre ✦'},
+    {body:['Puedes enojarte mi amor… No tienes que ser siempre tranquila ni manejar todo con calma... El enojo también es una emoción válida y tiene derecho a existir. No te presiones por estar bien cuando no lo estás. Aquí puedes ser todo lo que sientes, incluyendo esto…'],sig:'Todo lo que sientes es válido.. ✦'},
+    {body:['No tienes que aguantarte el enojo para protegerme a mí… Si algo te molestó, dímelo. Si algo que hice o dije te lastimó, necesito saberlo… No me incomodo con la verdad. Al contrario, prefiero que me digas lo que sientes antes que cargues eso sola.'],sig:'No me lo guardes, dímelo sim? ✦'},
+    {body:['A veces el enojo aparece porque algo nos importa mucho. Si estás enojada, es porque hay algo que valoras y que sientes que fue de alguna forma afectado. Eso no es malo… Es una señal de que te importa, y que te importe es una de las cosas que más me gustan de ti.'],sig:'Tu enojo también dice que amas :b ✦'},
+    {body:['Cuando pase este momento, aquí voy a seguir estando… Sin rencor ni nada de eso, sin hacerte sentir mal por haberte enojado… Las parejas se enojan, dicen cosas, tienen momentos difíciles... y después se eligen de nuevo. Yo ya sé que te voy a elegir de nuevo. Solo espero que tú también… :c'],sig:'Aunque estes enojada, te elijo igual ✦'},
+    {body:['Oye mi amor.. sabes qué? Cuando estés lista, cuéntame… Pls enserio no tienes que resolverlo todo sola ni llegar a mí con todo ya procesado. Puedes decirme las cosas aunque estén desordenadas y empezar desde ahí. Yo escucho, no interrumpo, y no juzgo… Pinky promise...'],sig:'No te lo guardes.. pls✦'},
+    {body:['Puedes decirme lo que sientes. Siempre. No me va a asustar y mucho menos me va a alejar. Prefiero mil veces que seas honesta conmigo, aunque tal vez sea incómodo, a que te quedes callada y cargues eso sola. Tu opinión me importa. Lo que sientes importa. Y yo quiero escucharlo…'],sig:'Lo que pienses siempre me importará ✦'},
+    {body:['Que nos enojemos no significa que algo está mal entre nosotros. Significa que somos reales, que nos importamos, que no somos perfectos... Las relaciones de verdad no son las que nunca tienen conflictos, son las que los enfrentan juntos. Y yo quiero enfrentarlos contigo mi amor :3'],sig:'Los conflictos también nos unen ✦'},
+    {body:['Te quiero incluso cuando estás enojada conmigo… Especialmente entonces… Porque en ese momento estás siendo completamente honesta y esa versión tuya también es la que elegí… No desaparezco cuando las cosas se ponen difíciles. Me quedo...'],sig:'Me quedaré pase lo que pase ✦'},
+    {body:['Quiero entenderte mi amor… No solo escucharte, sino de verdad entender qué pasó, cómo te hizo sentir y qué necesitas de mí ahora… No quiero ganar ninguna discusión. Quiero que estemos bien los dos. Ayúdame a entender que es lo que esta pasando :cc .'],sig:'Quiero entenderte, no ganar ✦'},
+    {body:['No te guardes nada. Si algo te molesta, dímelo. Si algo que hice te lastimó sin que me diera cuenta, necesito saberlo… No puedo arreglar lo que no sé que está roto… Habla conmigo. Yo escucho, te lo prometo.'],sig:'Habla conmigo :c ✦'},
+    {body:['Si me equivoqué, lo primero que voy a hacer es reconocerlo… Sin excusas, sin voltear la situación… Y luego voy a hacer todo lo posible para arreglarlo, porque tú me importas más que tener la razón y siempre será así.'],sig:'Tú me importas más que tener la razón ✦'},
+    {body:['Sigo aquí. Eso no cambia. Ni el enojo, ni la distancia, ni un mal momento van a cambiar lo que siento por ti. Cuando estés lista para hablar, aquí voy a estar. Y cuando todo esto pase, vamos a estar bien. Los dos…'],sig:'Estaremos bien pase lo que pase.. Verdad ¿? ✦'},
   ]}
 };
 

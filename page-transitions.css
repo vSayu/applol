@@ -1,0 +1,23 @@
+html.page-transitions body{
+  opacity:0;
+  transform:translate3d(0,10px,0);
+  transition:opacity .32s ease,transform .32s cubic-bezier(.2,.8,.2,1);
+}
+html.page-transitions body.page-ready{
+  opacity:1;
+  transform:translate3d(0,0,0);
+}
+html.page-transitions body.page-leaving{
+  opacity:0;
+  pointer-events:none;
+  transform:translate3d(0,-8px,0);
+}
+@media (prefers-reduced-motion:reduce){
+  html.page-transitions body,
+  html.page-transitions body.page-ready,
+  html.page-transitions body.page-leaving{
+    opacity:1;
+    transform:none;
+    transition:none;
+  }
+}

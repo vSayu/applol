@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>¿Qué tanto me conoces? 🎯</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="page-transitions.css">
+<script src="page-transitions.js"></script>
 <style>
 :root{
   --bg:#FDF6F0;--surface:#fff;
@@ -155,7 +157,7 @@ html,body{height:100%;background:var(--bg);font-family:'DM Sans',sans-serif;colo
       </div>
       <div class="result-btns">
         <button class="rbtn retry" onclick="startQuiz()">Intentar de nuevo</button>
-        <button class="rbtn home" onclick="window.location.href='index.html'">Inicio →</button>
+        <button class="rbtn home" onclick="goPage('index.html')">Inicio →</button>
       </div>
     </div>
   </div>
