@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Una carta para ti ✉️</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FDF6F0;--surface:#fff;
+  --pink:#F4A7B9;--pink-d:#E07A9A;
+  --lila:#C9B8E8;--lila-d:#9B7FD4;
+  --text:#2D2230;--text2:#7A6875;--text3:#B5A8B0;
+  --radius:20px;--shadow:0 4px 24px rgba(180,120,160,.12);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);overscroll-behavior:none;}
+.shell{max-width:390px;height:100dvh;margin:0 auto;display:flex;flex-direction:column;overflow:hidden;position:relative;}
+
+.inner{flex:1;overflow-y:auto;padding:2.5rem 1.4rem 3rem;}
+.inner::-webkit-scrollbar{display:none;}
+
+.top-row{display:flex;align-items:center;gap:.9rem;margin-bottom:1.8rem;}
+.back-btn{width:40px;height:40px;border-radius:50%;background:var(--surface);box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;border:none;text-decoration:none;color:var(--text);cursor:pointer;}
+.top-kicker{font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--text3);}
+.top-title{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--text);line-height:1.15;}
+.top-title em{font-style:italic;color:var(--pink-d);}
+
+/* SEALED STATE */
+.sealed{display:flex;flex-direction:column;align-items:center;text-align:center;padding:1rem 0;}
+.envelope-wrap{position:relative;margin-bottom:2rem;cursor:pointer;}
+.envelope{width:180px;height:130px;position:relative;transition:transform .3s;}
+.envelope:active{transform:scale(.97);}
+
+/* envelope SVG pieces */
+.env-body{fill:#FDDCCC;}
+.env-flap{fill:#F4A7B9;transform-origin:top center;transition:transform .5s ease;}
+.env-flap.open{transform:rotateX(180deg);}
+.env-heart{fill:#E07A9A;}
+
+.seal-title{font-family:'DM Serif Display',serif;font-size:1.7rem;color:var(--text);margin-bottom:.5rem;}
+.seal-title em{font-style:italic;color:var(--pink-d);}
+.seal-sub{font-size:.88rem;color:var(--text2);line-height:1.65;max-width:260px;margin:0 auto 2rem;}
+.open-btn{border:none;background:linear-gradient(135deg,var(--pink),var(--lila));color:#fff;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;border-radius:14px;padding:1rem 2.5rem;cursor:pointer;transition:transform .15s;box-shadow:0 4px 16px rgba(200,120,160,.25);}
+.open-btn:active{transform:scale(.97);}
+
+/* LETTER STATE */
+.letter-wrap{display:none;opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease;}
+.letter-wrap.show{display:block;}
+.letter-wrap.visible{opacity:1;transform:translateY(0);}
+
+.letter-card{background:var(--surface);border-radius:var(--radius);padding:2rem 1.7rem;box-shadow:var(--shadow);margin-bottom:1rem;position:relative;overflow:hidden;}
+.letter-card::before{content:'✦';position:absolute;right:1.2rem;top:.8rem;font-size:5rem;opacity:.04;color:var(--pink-d);line-height:1;}
+.letter-card p{font-family:'DM Serif Display',serif;font-style:italic;font-size:1.02rem;line-height:1.95;color:var(--text);margin-bottom:1.1rem;}
+.letter-card p:last-of-type{margin-bottom:0;}
+.letter-sig{font-family:'DM Sans',sans-serif;font-style:normal;font-size:.8rem;color:var(--pink-d);font-weight:500;margin-top:1.2rem;}
+
+.rule{display:flex;align-items:center;gap:.8rem;margin:1.4rem 0;}
+.rule-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(196,169,108,.25),transparent);}
+.rule-glyph{font-size:.7rem;color:var(--text3);}
+
+/* WHATSAPP BTN */
+.wa-wrap{text-align:center;margin-top:.5rem;}
+.wa-label{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:.9rem;}
+.wa-btn{display:inline-flex;align-items:center;gap:.65rem;border:none;background:#25D366;color:#fff;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;border-radius:14px;padding:.9rem 1.8rem;cursor:pointer;text-decoration:none;box-shadow:0 4px 16px rgba(37,211,102,.3);transition:transform .15s;}
+.wa-btn:active{transform:scale(.97);}
+.wa-icon{width:22px;height:22px;flex-shrink:0;}
+
+/* CONFETTI */
+.confetti-piece{position:fixed;width:8px;height:8px;border-radius:2px;pointer-events:none;z-index:999;animation:fall linear forwards;}
+@keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(105vh) rotate(720deg);opacity:0;}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="inner">
+    <div class="top-row">
+      <a class="back-btn" href="index.html">←</a>
+      <div>
+        <div class="top-kicker">carta</div>
+        <div class="top-title">Una carta<br><em>para ti</em></div>
+      </div>
+    </div>
+
+    <!-- SEALED -->
+    <div class="sealed" id="sealed">
+      <div class="envelope-wrap" onclick="openLetter()">
+        <svg class="envelope" viewBox="0 0 180 130" xmlns="http://www.w3.org/2000/svg">
+          <!-- body -->
+          <rect class="env-body" x="0" y="20" width="180" height="110" rx="10"/>
+          <!-- bottom fold lines -->
+          <polygon class="env-body" points="0,130 90,75 180,130" fill="#F9D9C8"/>
+          <!-- side folds -->
+          <polygon points="0,20 0,130 75,80" fill="#F4C0CE" opacity=".6"/>
+          <polygon points="180,20 180,130 105,80" fill="#F4C0CE" opacity=".6"/>
+          <!-- flap -->
+          <polygon class="env-flap" id="env-flap" points="0,20 180,20 90,85" fill="#F4A7B9"/>
+          <!-- heart seal -->
+          <path class="env-heart" id="env-heart" d="M90 72 Q85 63 78 63 Q70 63 70 71 Q70 78 90 90 Q110 78 110 71 Q110 63 102 63 Q95 63 90 72Z" opacity="1"/>
+        </svg>
+      </div>
+      <h2 class="seal-title">Para <em>Nicole</em></h2>
+      <p class="seal-sub">Toca el sobre para abrirlo 💕</p>
+      <button class="open-btn" onclick="openLetter()">Abrir carta ✉️</button>
+    </div>
+
+    <!-- LETTER -->
+    <div class="letter-wrap" id="letter-wrap">
+      <div class="letter-card">
+        <p>Nicole,</p>
+        <p>No sé muy bien por dónde empezar jsjk, así que voy a empezar por lo más honesto que tengo para decirte.. hice esta app con todo mi corazón. No es una exageración ni algo que digo para que suene bonito de vdd me senté a pensar durante muuucho tiempo en qué quería que sintieras cuando la abrieras (por eso tardé tanto jej), en qué palabras usar, en cómo organizar cada sección para que de verdad te llegara. Hay horas de trabajo aquí, sim, pero sobre todo hay un montoooon de amor. Cada mensaje que escribí, cada detalle que elegí, cada color y cada palabra... pensé en ti mientras lo hacía. Quería que cuando lo leyeras sintieras exactamente lo que siento yo cuando estoy contigo.. que eres la persona más importante de mi mundo.</p>
+        <p>Y lo mejor de todo es que esto no termina aquí. Voy a seguir actualizando la app con el tiempo, agregándole cosas nuevas, dejándote mensajes que hoy todavía no existe pero que van a ir apareciendo porquito a poquito. Porque mientras estemos juntos, siempre voy a querer encontrar formas de decirte lo mucho que te amo. Esta es una de ellas. Peeero, habrá más :b.</p>
+        <p>Eres una novia increíble mi amor. Y lo digo de verdad, no porque sea lo que hay que decir en una carta. Lo digo porque lo vivo todos toditos los días. La forma en que me escuchas, los detalles que tienes, cómo me haces sentir querido incluso en los días en que yo mismo no me quiero tanto... eso no es algo común. No todo el mundo sabe amar así, con esa intensidad y ese compromiso. Pero tú si mi amor. Y verlo, recibirlo, me hace darme cuenta todos los días de lo ridículamente afortunado que soy de tenerte a mi lado :3.</p>
+        <p>Me encanta la persona que eres. Me encanta lo empática que eres, la forma en que te preocupas por las personas que quieres, ese corazón enorme que tienes aunque a veces tú misma no lo veas. Me encanta cómo me haces reír con cualquier tontería, cómo me sigues la corriente con mis chistes malos aunque ya los hayas escuchado mil veces jsjs. Me encanta que seas tan auténtica, que no tengas que fingir nada conmigo, que cuando estás conmigo puedas ser completamente tú. Y me encanta que desde esa primera noche en el cumpleaños de Joao, sin razón aparente, decidiste abrirte conmigo. Eso todavía me parece algo enorme. No le hablas asi cualquiera, pero decidiste hablarme a mí (es el destino uwuw).</p>
+        <p>Te prometí cosas que me importan de verdad. Cambiar mis malos hábitos, los que sé que tengo y que quiero soltar. Ser una mejor persona, no solo para ti, sino para mí también, porque me lo merezco y porque quiero ser el mejor novio para tí, algún dia hablarás de mi con tu familia, amigos y diras "wahhh, mi noviestio es así y tambien ajam". Esforzarme en la universidad con todo lo que tengo, aunque haya días en que cuesta un montón y lo último que quiero es abrir un libro XDD. En esos días pienso en ti. Pienso en lo que queremos construir juntos y de repente el esfuerzo tiene otro peso, otro significado. No estudio solo por mí. Estudio por nosotros.</p>
+        <p>Porque tengo muy claro lo que quiero. Quiero la casita que hemos hablado, con nuestros gatos corriendo por todos lados y un perro durmiendo en el sillón. Quiero la boda bonita, con todo lo que eso significa. Quiero despertarme al lado tuyo, hacer el desayuno juntos, pelear por la mantita jksjks, y quedarme dormidito escuchándote respirar, o los ronquidos idk. Quiero vivir todo eso contigo. Y lo voy a construir. Paso a paso, día a día, sin importar cuánto cueste. Eso te lo prometo.</p>
+        <p>Sé que a veces tienes miedos. Por ejemplo, miedo de que algo salga mal. Y quiero que sepas que entiendo esos miedos, que no los minimizo. Pero también quiero que sepas algo que es completamente verdad.. Mi amor, no existe versión de ti que no me encante. Ni la que duda, ni la que tiene miedo, ni la que se queda dormida a mitad de una llamada de Discord. Todas esas versiones son las que elegí el 02 de junio, y las que sigo eligiendo cada día. No te amo a pesar de cómo eres. Te amo exactamente porque eres tú.</p>
+        <p>Gracias mi vida. Gracias por confiar en mí desde esa primera noche. Gracias por los screenshots que me mandaste de tus conversaciones con tus amigas hablando de mí kjsks, porque en ese momento supe que esto era real y que era recíproco. Gracias por venir a mi casa ese día y por decir que sí cuando te pregunté si querías ser mi novia. Gracias por quedarte dormida en las llamadas, por reírte de mis chistes malos, por escucharme hablar de LoL aunque no te importe tanto. Gracias por hacer que cada día a tu lado sea mejor que el anterior. Gracias por ser tú.</p>
+        <p>Esta app es mía. Pero también es tuya. Igual que yo.</p>
+        <div class="letter-sig">Con todo lo que tengo, hoy y siempre — Jair ✦</div>
+      </div>
+
+      <div class="rule"><div class="rule-line"></div><span class="rule-glyph">✦</span><div class="rule-line"></div></div>
+
+      <div class="wa-wrap">
+        <p class="wa-label">¿Qué te pareció la app? Jej :b</p>
+        <a class="wa-btn"
+           href="https://wa.me/51935387061?text=Hola%20mi%20amor%20%F0%9F%8C%B8%20acabo%20de%20abrir%20la%20carta%20y..."
+           target="_blank">
+          <svg class="wa-icon" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.134.558 4.133 1.535 5.865L.057 23.077a.75.75 0 0 0 .916.919l5.356-1.488A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.686-.511-5.218-1.402l-.374-.22-3.178.883.847-3.092-.242-.389A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+          </svg>
+          Escribeme ahora :3
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+let opened = false;
+
+function openLetter(){
+  if(opened) return;
+  opened = true;
+
+  // animate envelope
+  document.getElementById('env-flap').style.transform = 'rotateX(180deg)';
+  document.getElementById('env-heart').style.opacity = '0';
+
+  setTimeout(()=>{
+    document.getElementById('sealed').style.display = 'none';
+    const lw = document.getElementById('letter-wrap');
+    lw.classList.add('show');
+    setTimeout(()=>lw.classList.add('visible'), 30);
+    launchConfetti();
+  }, 500);
+}
+
+function launchConfetti(){
+  const colors=['#F4A7B9','#C9B8E8','#FAE3A0','#C8E6DA','#FDDCCC','#B8D8F0'];
+  for(let i=0;i<55;i++){
+    setTimeout(()=>{
+      const el=document.createElement('div');
+      el.className='confetti-piece';
+      el.style.cssText=`left:${Math.random()*100}vw;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${1.3+Math.random()*1.4}s;animation-delay:${Math.random()*.3}s;border-radius:${Math.random()>.5?'50%':'2px'};`;
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(), 2500);
+    }, i*20);
+  }
+}
+</script>
+</body>
+</html>

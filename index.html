@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Para ti, Nicole 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FDF6F0;--surface:#fff;
+  --pink:#F4A7B9;--pink-d:#E07A9A;
+  --lila:#C9B8E8;--lila-d:#9B7FD4;
+  --peach:#FDDCCC;--yellow:#FAE3A0;--mint:#C8E6DA;--blue:#B8D8F0;
+  --text:#2D2230;--text2:#7A6875;--text3:#B5A8B0;
+  --radius:22px;--shadow:0 4px 24px rgba(180,120,160,.13);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);overscroll-behavior:none;}
+
+.shell{max-width:390px;height:100dvh;margin:0 auto;display:flex;flex-direction:column;overflow:hidden;animation:appFadeIn .75s ease both;}
+
+/* SCROLL AREA */
+.inner{flex:1;overflow-y:auto;padding:3rem 1.4rem 2rem;}
+.inner::-webkit-scrollbar{display:none;}
+
+/* HEADER */
+.avatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--lila));display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:1.1rem;}
+.kicker{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:.4rem;}
+.title{font-family:'DM Serif Display',serif;font-size:2.3rem;line-height:1.15;color:var(--text);margin-bottom:.55rem;}
+.title em{font-style:italic;color:var(--pink-d);}
+.subtitle{font-size:.9rem;color:var(--text2);line-height:1.65;margin-bottom:2rem;}
+
+/* COUNTER PILL */
+.counter-pill{background:linear-gradient(135deg,#F7C5D5,#DEC9F0 50%,#F9D9C8);border-radius:16px;padding:1.2rem 1.4rem;margin-bottom:2rem;display:flex;align-items:center;justify-content:space-between;}
+.cp-label{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(80,40,60,.5);margin-bottom:.3rem;}
+.cp-nums{display:flex;gap:.7rem;align-items:baseline;}
+.cp-big{font-family:'DM Serif Display',serif;font-size:2.6rem;color:var(--text);line-height:1;}
+.cp-unit{font-size:.78rem;color:rgba(80,40,60,.45);}
+.cp-right{text-align:right;}
+.cp-hms{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--text);line-height:1.4;}
+.cp-since{font-size:.68rem;color:rgba(80,40,60,.4);margin-top:.2rem;}
+
+/* SECTION LABEL */
+.sec-label{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:.85rem;margin-top:.2rem;}
+
+/* CARDS GRID */
+.cards{display:flex;flex-direction:column;gap:.85rem;}
+.card{border-radius:var(--radius);padding:1.35rem 1.4rem;display:flex;align-items:center;gap:1.1rem;cursor:pointer;text-decoration:none;transition:transform .15s,box-shadow .15s;box-shadow:0 2px 12px rgba(180,120,160,.08);}
+.card:active{transform:scale(.97);}
+.card-icon{font-size:2.1rem;flex-shrink:0;width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;}
+.card-body{flex:1;}
+.card-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--text);margin-bottom:.2rem;}
+.card-sub{font-size:.78rem;color:var(--text2);line-height:1.4;}
+.card-arrow{font-size:.95rem;color:rgba(80,40,60,.3);}
+
+.c-moods{background:linear-gradient(135deg,#FDE0EC,#FDDCCC);}
+.c-quiz{background:linear-gradient(135deg,#EAD8F8,#C9B8E8);}
+.c-capsula{background:linear-gradient(135deg,#FDE9C8,#FAE3A0);}
+.c-carta{background:linear-gradient(135deg,#D6F0E8,#C8E6DA);}
+
+.footer-love{text-align:center;margin-top:2rem;padding-bottom:.4rem;color:var(--text3);}
+.footer-names{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--text2);}
+.footer-heart{color:var(--pink-d);font-size:.95rem;margin:0 .25rem;}
+.footer-forever{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;margin-top:.25rem;}
+
+.avatar,.kicker,.title,.subtitle,.counter-pill,.sec-label,.card,.footer-love{
+  animation:softRise .7s cubic-bezier(.2,.8,.2,1) both;
+}
+.avatar{animation-delay:.08s;}
+.kicker{animation-delay:.14s;}
+.title{animation-delay:.2s;}
+.subtitle{animation-delay:.28s;}
+.counter-pill{animation-delay:.38s;}
+.sec-label{animation-delay:.48s;}
+.card:nth-child(1){animation-delay:.56s;}
+.card:nth-child(2){animation-delay:.64s;}
+.card:nth-child(3){animation-delay:.72s;}
+.card:nth-child(4){animation-delay:.8s;}
+.footer-love{animation-delay:.9s;}
+
+@keyframes appFadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+@keyframes softRise{
+  from{opacity:0;transform:translateY(14px) scale(.985);}
+  to{opacity:1;transform:translateY(0) scale(1);}
+}
+@media (prefers-reduced-motion:reduce){
+  .shell,.avatar,.kicker,.title,.subtitle,.counter-pill,.sec-label,.card,.footer-love{
+    animation:none;
+  }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="inner">
+
+    <!-- HEADER -->
+    <div class="avatar">💕</div>
+    <p class="kicker">solo para ti</p>
+    <h1 class="title">Hola,<br><em>Nicole</em> 🌸</h1>
+    <p class="subtitle">Esto lo hice para ti. Para todos tus momentos.</p>
+
+    <!-- COUNTER -->
+    <div class="counter-pill">
+      <div>
+        <div class="cp-label">llevamos juntos</div>
+        <div class="cp-nums">
+          <span class="cp-big" id="cp-d">0</span>
+          <span class="cp-unit">días</span>
+        </div>
+      </div>
+      <div class="cp-right">
+        <div class="cp-hms" id="cp-hms">00:00:00</div>
+        <div class="cp-since">desde el 02·06·2026 · 9 am</div>
+      </div>
+    </div>
+
+    <!-- NAVIGATION CARDS -->
+    <p class="sec-label">¿Qué quieres abrir?</p>
+    <div class="cards">
+
+      <a class="card c-moods" href="moods.html">
+        <div class="card-icon">💭</div>
+        <div class="card-body">
+          <div class="card-title">¿Cómo te sientes?</div>
+          <div class="card-sub">Mensajes para cada momento tuyo</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <a class="card c-quiz" href="quiz.html">
+        <div class="card-icon">🎯</div>
+        <div class="card-body">
+          <div class="card-title">¿Qué tanto me conoces?</div>
+          <div class="card-sub">Un quiz sobre nosotros</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <a class="card c-capsula" href="capsula.html">
+        <div class="card-icon">💌</div>
+        <div class="card-body">
+          <div class="card-title">Cápsula del tiempo</div>
+          <div class="card-sub">Sobres para el 1er, 3er y 6to mes</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <a class="card c-carta" href="carta.html">
+        <div class="card-icon">✉️</div>
+        <div class="card-body">
+          <div class="card-title">Una carta para ti</div>
+          <div class="card-sub">Ábrela cuando quieras</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+
+    </div>
+
+    <footer class="footer-love">
+      <div class="footer-names">Jair <span class="footer-heart">&hearts;</span> Nicole</div>
+      <div class="footer-forever">Por siempre y para siempre</div>
+    </footer>
+  </div>
+</div>
+
+<script>
+const START = new Date('2026-06-02T09:00:00');
+function pad(n){return String(n).padStart(2,'0');}
+function tick(){
+  const diff = Math.max(0, new Date() - START);
+  const s = Math.floor(diff/1000)%60;
+  const m = Math.floor(diff/60000)%60;
+  const h = Math.floor(diff/3600000)%24;
+  const d = Math.floor(diff/86400000);
+  document.getElementById('cp-d').textContent = d;
+  document.getElementById('cp-hms').textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
+}
+tick(); setInterval(tick, 1000);
+</script>
+</body>
+</html>
