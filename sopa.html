@@ -283,6 +283,7 @@ function startPuzzle(idx){
   renderWords();
   renderGrid();
   show('s-game');
+  gridElementListener();
 }
 
 function updateProgress(){
@@ -321,18 +322,6 @@ function renderGrid(){
         currentSelection=[[r,c]];
         highlightSelection();
       });
-      cell.addEventListener('pointerenter', e=>{
-        if(!selecting) return;
-        const sel = getLineCells(startCell,[r,c]);
-        currentSelection=sel;
-        highlightSelection();
-      });
-      cell.addEventListener('pointerup', e=>{
-        if(!selecting) return;
-        selecting=false;
-        checkSelection();
-      });
-
       g.appendChild(cell);
     }
   }
@@ -417,6 +406,26 @@ function launchConfetti(){
     },i*18);
   }
 }
+
+
+const gridElementListener=()=>{
+  const gridElement=document.getElementById("g-grid");
+  if(gridElement.dataset.bound)return;
+  gridElement.dataset.bound="1";
+  gridElement.addEventListener("pointermove",(e)=>{
+    if(!selecting)return;
+    const elemento=document.elementFromPoint(e.clientX,e.clientY);
+    if(!elemento||!elemento.classList.contains("cell"))return;
+    const r=+elemento.dataset.r,c=+elemento.dataset.c;
+    currentSelection=getLineCells(startCell,[r,c]);
+    highlightSelection();
+  });
+  window.addEventListener("pointerup",()=>{
+    if(!selecting)return;
+    selecting=false;
+    checkSelection();
+  });
+};
 
 function show(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
