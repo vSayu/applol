@@ -21,18 +21,15 @@ html,body{height:100%;background:var(--bg);font-family:'DM Sans',sans-serif;colo
 
 .shell{max-width:390px;height:100dvh;margin:0 auto;display:flex;flex-direction:column;overflow:hidden;animation:appFadeIn .75s ease both;}
 
-/* SCROLL AREA */
 .inner{flex:1;overflow-y:auto;padding:3rem 1.4rem 2rem;}
 .inner::-webkit-scrollbar{display:none;}
 
-/* HEADER */
 .avatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--lila));display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:1.1rem;}
 .kicker{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:.4rem;}
 .title{font-family:'DM Serif Display',serif;font-size:2.3rem;line-height:1.15;color:var(--text);margin-bottom:.55rem;}
 .title em{font-style:italic;color:var(--pink-d);}
 .subtitle{font-size:.9rem;color:var(--text2);line-height:1.65;margin-bottom:2rem;}
 
-/* COUNTER PILL */
 .counter-pill{background:linear-gradient(135deg,#F7C5D5,#DEC9F0 50%,#F9D9C8);border-radius:16px;padding:1.2rem 1.4rem;margin-bottom:2rem;display:flex;align-items:center;justify-content:space-between;}
 .cp-label{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(80,40,60,.5);margin-bottom:.3rem;}
 .cp-nums{display:flex;gap:.7rem;align-items:baseline;}
@@ -42,10 +39,8 @@ html,body{height:100%;background:var(--bg);font-family:'DM Sans',sans-serif;colo
 .cp-hms{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--text);line-height:1.4;}
 .cp-since{font-size:.68rem;color:rgba(80,40,60,.4);margin-top:.2rem;}
 
-/* SECTION LABEL */
 .sec-label{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:.85rem;margin-top:.2rem;}
 
-/* CARDS GRID */
 .cards{display:flex;flex-direction:column;gap:.85rem;}
 .card{border-radius:var(--radius);padding:1.35rem 1.4rem;display:flex;align-items:center;gap:1.1rem;cursor:pointer;text-decoration:none;transition:transform .15s,box-shadow .15s;box-shadow:0 2px 12px rgba(180,120,160,.08);}
 .card:active{transform:scale(.97);}
@@ -55,10 +50,11 @@ html,body{height:100%;background:var(--bg);font-family:'DM Sans',sans-serif;colo
 .card-sub{font-size:.78rem;color:var(--text2);line-height:1.4;}
 .card-arrow{font-size:.95rem;color:rgba(80,40,60,.3);}
 
-.c-moods{background:linear-gradient(135deg,#FDE0EC,#FDDCCC);}
-.c-quiz{background:linear-gradient(135deg,#EAD8F8,#C9B8E8);}
+.c-moods  {background:linear-gradient(135deg,#FDE0EC,#FDDCCC);}
+.c-quiz   {background:linear-gradient(135deg,#EAD8F8,#C9B8E8);}
 .c-capsula{background:linear-gradient(135deg,#FDE9C8,#FAE3A0);}
-.c-carta{background:linear-gradient(135deg,#D6F0E8,#C8E6DA);}
+.c-carta  {background:linear-gradient(135deg,#D6F0E8,#C8E6DA);}
+.c-sopa   {background:linear-gradient(135deg,#D6E8F8,#B8D8F0);}
 
 .footer-love{text-align:center;margin-top:2rem;padding-bottom:.4rem;color:var(--text3);}
 .footer-names{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--text2);}
@@ -77,21 +73,17 @@ html,body{height:100%;background:var(--bg);font-family:'DM Sans',sans-serif;colo
 .card:nth-child(1){animation-delay:.56s;}
 .card:nth-child(2){animation-delay:.64s;}
 .card:nth-child(3){animation-delay:.72s;}
-.card:nth-child(4){animation-delay:.8s;}
-.footer-love{animation-delay:.9s;}
+.card:nth-child(4){animation-delay:.80s;}
+.card:nth-child(5){animation-delay:.88s;}
+.footer-love{animation-delay:.96s;}
 
-@keyframes appFadeIn{
-  from{opacity:0;}
-  to{opacity:1;}
-}
+@keyframes appFadeIn{from{opacity:0;}to{opacity:1;}}
 @keyframes softRise{
   from{opacity:0;transform:translateY(14px) scale(.985);}
   to{opacity:1;transform:translateY(0) scale(1);}
 }
-@media (prefers-reduced-motion:reduce){
-  .shell,.avatar,.kicker,.title,.subtitle,.counter-pill,.sec-label,.card,.footer-love{
-    animation:none;
-  }
+@media(prefers-reduced-motion:reduce){
+  .shell,.avatar,.kicker,.title,.subtitle,.counter-pill,.sec-label,.card,.footer-love{animation:none;}
 }
 </style>
 </head>
@@ -99,13 +91,11 @@ html,body{height:100%;background:var(--bg);font-family:'DM Sans',sans-serif;colo
 <div class="shell">
   <div class="inner">
 
-    <!-- HEADER -->
     <div class="avatar">💕</div>
     <p class="kicker">solo para ti</p>
     <h1 class="title">Hola,<br><em>Nicole</em> 🌸</h1>
     <p class="subtitle">Esto lo hice para ti. Para todos tus momentos.</p>
 
-    <!-- COUNTER -->
     <div class="counter-pill">
       <div>
         <div class="cp-label">llevamos juntos</div>
@@ -120,7 +110,6 @@ html,body{height:100%;background:var(--bg);font-family:'DM Sans',sans-serif;colo
       </div>
     </div>
 
-    <!-- NAVIGATION CARDS -->
     <p class="sec-label">¿Qué quieres abrir?</p>
     <div class="cards">
 
@@ -156,6 +145,15 @@ html,body{height:100%;background:var(--bg);font-family:'DM Sans',sans-serif;colo
         <div class="card-body">
           <div class="card-title">Una carta para ti</div>
           <div class="card-sub">Ábrela cuando quieras</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <a class="card c-sopa" href="sopa.html">
+        <div class="card-icon">🔍</div>
+        <div class="card-body">
+          <div class="card-title">Sopa de letras</div>
+          <div class="card-sub">Sopitas de letras :b</div>
         </div>
         <span class="card-arrow">→</span>
       </a>

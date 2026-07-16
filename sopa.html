@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Sopa de letras 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FDF6F0;--surface:#fff;
+  --pink:#F4A7B9;--pink-d:#E07A9A;
+  --lila:#C9B8E8;--lila-d:#9B7FD4;
+  --text:#2D2230;--text2:#7A6875;--text3:#B5A8B0;
+  --radius:20px;--shadow:0 4px 24px rgba(180,120,160,.12);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);overscroll-behavior:none;}
+.shell{max-width:390px;height:100dvh;margin:0 auto;display:flex;flex-direction:column;overflow:hidden;position:relative;}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .28s ease,transform .28s ease;transform:translateY(12px);}
+.screen.active{opacity:1;pointer-events:all;transform:translateY(0);}
+.inner{flex:1;overflow-y:auto;padding:1.5rem 1.4rem 3rem;}
+.inner::-webkit-scrollbar{display:none;}
+
+.top-row{display:flex;align-items:center;gap:.9rem;margin-bottom:1.4rem;}
+.back-btn{width:40px;height:40px;border-radius:50%;background:var(--surface);box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;border:none;text-decoration:none;color:var(--text);cursor:pointer;}
+.top-kicker{font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--text3);}
+.top-title{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--text);line-height:1.15;}
+.top-title em{font-style:italic;color:var(--pink-d);}
+
+/* INTRO */
+.intro-hero{background:linear-gradient(135deg,#F8E0EC,#FDDCCC);border-radius:var(--radius);padding:1.8rem 1.5rem;text-align:center;margin-bottom:1.3rem;}
+.intro-emoji{font-size:2.8rem;margin-bottom:.5rem;}
+.intro-title{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--text);margin-bottom:.3rem;}
+.intro-title em{font-style:italic;color:var(--pink-d);}
+.intro-sub{font-size:.85rem;color:var(--text2);line-height:1.6;}
+.puzzles-list{display:flex;flex-direction:column;gap:.8rem;}
+.puzzle-item{background:var(--surface);border-radius:16px;padding:1.1rem 1.3rem;box-shadow:var(--shadow);cursor:pointer;display:flex;align-items:center;gap:1rem;transition:transform .15s;}
+.puzzle-item:active{transform:scale(.97);}
+.puzzle-num{font-family:'DM Serif Display',serif;font-size:1.8rem;color:rgba(200,160,180,.3);line-height:1;flex-shrink:0;width:36px;}
+.puzzle-info{flex:1;}
+.puzzle-title{font-family:'DM Serif Display',serif;font-size:1rem;color:var(--text);margin-bottom:.2rem;}
+.puzzle-words{font-size:.75rem;color:var(--text3);}
+.puzzle-status{font-size:1.2rem;}
+
+/* GAME */
+.game-info{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;}
+.game-theme{font-family:'DM Serif Display',serif;font-style:italic;font-size:1rem;color:var(--pink-d);}
+.game-progress{font-size:.75rem;color:var(--text3);font-weight:500;}
+
+.word-list{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem;}
+.word-tag{font-size:.75rem;font-weight:500;padding:.3rem .75rem;border-radius:20px;background:#F5F0F8;color:var(--text2);transition:all .3s;}
+.word-tag.found{background:linear-gradient(135deg,var(--pink),var(--lila));color:#fff;text-decoration:line-through;opacity:.7;}
+
+.grid-wrap{background:var(--surface);border-radius:var(--radius);padding:1rem;box-shadow:var(--shadow);overflow:hidden;touch-action:none;}
+.grid{display:inline-grid;gap:2px;width:100%;}
+.cell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:500;color:var(--text);border-radius:6px;cursor:pointer;user-select:none;background:#FDF6F0;transition:background .15s,color .15s;position:relative;}
+.cell.selected{background:linear-gradient(135deg,var(--pink),var(--lila));color:#fff;}
+.cell.found-cell{background:linear-gradient(135deg,rgba(244,167,185,.3),rgba(201,184,232,.3));color:var(--pink-d);}
+.cell.found-cell.selected{background:linear-gradient(135deg,var(--pink),var(--lila));color:#fff;}
+
+/* WIN */
+.win-hero{background:linear-gradient(135deg,#F8E0EC,#FDDCCC);border-radius:var(--radius);padding:2rem 1.5rem;text-align:center;margin-bottom:1.2rem;}
+.win-emoji{font-size:3rem;margin-bottom:.6rem;}
+.win-title{font-family:'DM Serif Display',serif;font-size:1.7rem;color:var(--text);margin-bottom:.4rem;}
+.win-title em{font-style:italic;color:var(--pink-d);}
+.win-msg{background:var(--surface);border-radius:var(--radius);padding:1.3rem 1.4rem;box-shadow:var(--shadow);margin-bottom:1rem;}
+.win-msg p{font-family:'DM Serif Display',serif;font-style:italic;font-size:1rem;line-height:1.85;color:var(--text);}
+.win-sig{font-family:'DM Sans',sans-serif;font-style:normal;font-size:.78rem;color:var(--pink-d);font-weight:500;margin-top:.7rem;}
+.win-btns{display:flex;gap:.7rem;}
+.wbtn{flex:1;border:none;border-radius:14px;padding:.9rem;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;}
+.wbtn.next{background:linear-gradient(135deg,var(--pink),var(--lila));color:#fff;}
+.wbtn.list{background:var(--surface);color:var(--text2);box-shadow:var(--shadow);}
+
+/* CONFETTI */
+.confetti-piece{position:fixed;width:7px;height:7px;border-radius:2px;pointer-events:none;z-index:999;animation:fall linear forwards;}
+@keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(105vh) rotate(720deg);opacity:0;}}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- INTRO -->
+  <div class="screen active" id="s-intro">
+    <div class="inner" style="padding-top:2.5rem;">
+      <div class="top-row">
+        <a class="back-btn" href="index.html">←</a>
+        <div>
+          <div class="top-kicker">juego</div>
+          <div class="top-title">Sopa de<br><em>letras</em> 💕</div>
+        </div>
+      </div>
+      <div class="intro-hero">
+        <div class="intro-emoji">🔍</div>
+        <div class="intro-title">Encuentra las<br><em>palabras</em></div>
+        <p class="intro-sub">10 sopas sobre el amor. Encuéntralas todas 💕</p>
+      </div>
+      <div class="puzzles-list" id="puzzles-list"></div>
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div class="screen" id="s-game">
+    <div class="inner">
+      <div class="top-row">
+        <button class="back-btn" onclick="show('s-intro')">←</button>
+        <div>
+          <div class="top-kicker" id="g-kicker"></div>
+          <div class="top-title" id="g-title" style="font-size:1.2rem;"></div>
+        </div>
+      </div>
+      <div class="game-info">
+        <span class="game-theme" id="g-theme"></span>
+        <span class="game-progress" id="g-progress"></span>
+      </div>
+      <div class="word-list" id="g-words"></div>
+      <div class="grid-wrap">
+        <div class="grid" id="g-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WIN -->
+  <div class="screen" id="s-win">
+    <div class="inner">
+      <div class="top-row">
+        <button class="back-btn" onclick="show('s-intro')">←</button>
+        <div>
+          <div class="top-kicker">¡completada!</div>
+          <div class="top-title">Sopa <em>terminada</em></div>
+        </div>
+      </div>
+      <div class="win-hero">
+        <div class="win-emoji">🏆</div>
+        <div class="win-title">¡Lo <em>lograste!</em></div>
+      </div>
+      <div class="win-msg">
+        <p id="win-msg-text"></p>
+        <div class="win-sig">Tuyo siempre, Jair ✦</div>
+      </div>
+      <div class="win-btns">
+        <button class="wbtn list" onclick="show('s-intro')">← Volver</button>
+        <button class="wbtn next" id="btn-next-puzzle" onclick="nextPuzzle()">Siguiente →</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+const PUZZLES = [
+  {
+    title:'Sentimientos',
+    words:['AMOR','TERNURA','CALMA','FELIZ','ILUSION'],
+    msg:'Los sentimientos más bonitos tienen nombre... y todos me los haces sentir tú. 💕'
+  },
+  {
+    title:'Promesas',
+    words:['SIEMPRE','JAMAS','CONTIGO','PROMESA','ETERNO'],
+    msg:'Todo lo que te prometí lo digo en serio. Siempre, jamás y para siempre. ✦'
+  },
+  {
+    title:'Momentos',
+    words:['ABRAZO','BESO','MIRADA','RISA','CARICIA'],
+    msg:'Cada momento contigo es mi favorito. Guardo todos en mi cabeza. 🌸'
+  },
+  {
+    title:'Lo que eres para mí',
+    words:['HOGAR','LUZ','REFUGIO','PAZ','ALMA'],
+    msg:'Eres todo eso y más. Mi lugar seguro en este mundo. Te amo. ✦'
+  },
+  {
+    title:'El futuro',
+    words:['JUNTOS','SUENOS','VIDA','CAMINO','MANANA'],
+    msg:'El futuro me emociona un montón... pero solo porque vas a estar tú en él. 🥹'
+  },
+  {
+    title:'Palabras bonitas',
+    words:['DULCE','BONITA','UNICA','ESPECIAL','INCREIBLE'],
+    msg:'Todas estas palabras te quedan perfectas. Especialmente "increíble". ✦'
+  },
+  {
+    title:'Cuidado',
+    words:['CUIDAR','PROTEGER','SOSTENER','ABRAZAR','ESCUCHAR'],
+    msg:'Todo eso quiero hacer por ti. Siempre. Sin que tengas que pedirlo. 💕'
+  },
+  {
+    title:'Conexión',
+    words:['ALMAS','VINCULO','LATIDO','ENCUENTRO','DESTINO'],
+    msg:'Lo nuestro tiene demasiadas señales del destino para ser coincidencia. ✦'
+  },
+  {
+    title:'Detalles',
+    words:['CARTA','DETALLE','MENSAJE','SORPRESA','REGALO'],
+    msg:'Esta app es solo una de las formas en que quiero decirte lo mucho que te amo. 🌸'
+  },
+  {
+    title:'Para siempre',
+    words:['INFINITO','SIEMPRE','NUNCA','ELEGIDA','COMPLETA'],
+    msg:'Elegida, completa y amada. Eso eres tú para mí. Hoy y para siempre. ✦'
+  },
+];
+
+const GRID_SIZE = 10;
+const DIRS = [[0,1],[1,0],[0,-1],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]];
+const completed = new Array(PUZZLES.length).fill(false);
+
+let currentPuzzle = 0;
+let grid = [], placed = [], found = [], foundCells = new Set();
+let selecting = false, startCell = null, currentSelection = [];
+
+// ── BUILD LIST ──
+function buildList(){
+  const wrap = document.getElementById('puzzles-list');
+  wrap.innerHTML = '';
+  PUZZLES.forEach((p,i)=>{
+    const div = document.createElement('div');
+    div.className = 'puzzle-item';
+    div.innerHTML = `
+      <div class="puzzle-num">${i+1}</div>
+      <div class="puzzle-info">
+        <div class="puzzle-title">${p.title}</div>
+        <div class="puzzle-words">${p.words.join(' · ')}</div>
+      </div>
+      <div class="puzzle-status">${completed[i]?'✅':'🔒'}</div>`;
+    const canPlay = i===0 || completed[i-1];
+    if(canPlay){ div.onclick=()=>startPuzzle(i); div.style.opacity='1'; }
+    else { div.style.opacity='.45'; div.style.cursor='default'; }
+    wrap.appendChild(div);
+  });
+}
+
+// ── GENERATE GRID ──
+function generateGrid(words){
+  const g = Array.from({length:GRID_SIZE},()=>Array(GRID_SIZE).fill(''));
+  const p = [];
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+  for(const word of words){
+    let placed2 = false;
+    for(let attempt=0;attempt<200;attempt++){
+      const dir = DIRS[Math.floor(Math.random()*DIRS.length)];
+      const row = Math.floor(Math.random()*GRID_SIZE);
+      const col = Math.floor(Math.random()*GRID_SIZE);
+      const cells = [];
+      let ok = true;
+      for(let i=0;i<word.length;i++){
+        const r=row+dir[0]*i, c=col+dir[1]*i;
+        if(r<0||r>=GRID_SIZE||c<0||c>=GRID_SIZE){ok=false;break;}
+        if(g[r][c]!==''&&g[r][c]!==word[i]){ok=false;break;}
+        cells.push([r,c]);
+      }
+      if(ok){
+        cells.forEach(([r,c],i)=>g[r][c]=word[i]);
+        p.push({word,cells});
+        placed2=true;
+        break;
+      }
+    }
+    if(!placed2) console.warn('Could not place',word);
+  }
+  for(let r=0;r<GRID_SIZE;r++)
+    for(let c=0;c<GRID_SIZE;c++)
+      if(g[r][c]==='') g[r][c]=letters[Math.floor(Math.random()*letters.length)];
+  return {g,p};
+}
+
+// ── START PUZZLE ──
+function startPuzzle(idx){
+  currentPuzzle = idx;
+  const puzzle = PUZZLES[idx];
+  found = [];
+  foundCells = new Set();
+  selecting = false;
+  startCell = null;
+  currentSelection = [];
+
+  const {g,p} = generateGrid(puzzle.words);
+  grid = g; placed = p;
+
+  document.getElementById('g-kicker').textContent = `Sopa ${idx+1} de ${PUZZLES.length}`;
+  document.getElementById('g-title').textContent = puzzle.title;
+  document.getElementById('g-theme').textContent = puzzle.title;
+  updateProgress();
+  renderWords();
+  renderGrid();
+  show('s-game');
+}
+
+function updateProgress(){
+  const puzzle = PUZZLES[currentPuzzle];
+  document.getElementById('g-progress').textContent = `${found.length}/${puzzle.words.length} encontradas`;
+}
+
+function renderWords(){
+  const puzzle = PUZZLES[currentPuzzle];
+  const wrap = document.getElementById('g-words');
+  wrap.innerHTML = '';
+  puzzle.words.forEach(w=>{
+    const span = document.createElement('span');
+    span.className = 'word-tag'+(found.includes(w)?' found':'');
+    span.textContent = w.replace('ILUSION','ILUSIÓN').replace('SUENOS','SUEÑOS').replace('MANANA','MAÑANA').replace('JAMAS','JAMÁS').replace('UNICA','ÚNICA').replace('INCREIBLE','INCREÍBLE').replace('VINCULO','VÍNCULO');
+    wrap.appendChild(span);
+  });
+}
+
+function renderGrid(){
+  const g = document.getElementById('g-grid');
+  g.style.gridTemplateColumns = `repeat(${GRID_SIZE},1fr)`;
+  g.innerHTML = '';
+  for(let r=0;r<GRID_SIZE;r++){
+    for(let c=0;c<GRID_SIZE;c++){
+      const cell = document.createElement('div');
+      cell.className = 'cell'+(foundCells.has(`${r},${c}`)?' found-cell':'');
+      cell.textContent = grid[r][c];
+      cell.dataset.r = r;
+      cell.dataset.c = c;
+
+      cell.addEventListener('pointerdown', e=>{
+        e.preventDefault();
+        selecting=true;
+        startCell=[r,c];
+        currentSelection=[[r,c]];
+        highlightSelection();
+      });
+      cell.addEventListener('pointerenter', e=>{
+        if(!selecting) return;
+        const sel = getLineCells(startCell,[r,c]);
+        currentSelection=sel;
+        highlightSelection();
+      });
+      cell.addEventListener('pointerup', e=>{
+        if(!selecting) return;
+        selecting=false;
+        checkSelection();
+      });
+
+      g.appendChild(cell);
+    }
+  }
+}
+
+function getLineCells([r1,c1],[r2,c2]){
+  const dr=r2-r1, dc=c2-c1;
+  const len=Math.max(Math.abs(dr),Math.abs(dc));
+  if(len===0) return [[r1,c1]];
+  const sr=dr===0?0:dr/Math.abs(dr), sc=dc===0?0:dc/Math.abs(dc);
+  if(Math.abs(dr)>0&&Math.abs(dc)>0&&Math.abs(dr)!==Math.abs(dc)) return [[r1,c1]];
+  const cells=[];
+  for(let i=0;i<=len;i++) cells.push([r1+sr*i,c1+sc*i]);
+  return cells;
+}
+
+function highlightSelection(){
+  document.querySelectorAll('.cell').forEach(el=>{
+    const r=+el.dataset.r, c=+el.dataset.c;
+    const inSel=currentSelection.some(([sr,sc])=>sr===r&&sc===c);
+    el.classList.toggle('selected', inSel);
+  });
+}
+
+function checkSelection(){
+  const word = currentSelection.map(([r,c])=>grid[r][c]).join('');
+  const wordRev = word.split('').reverse().join('');
+  const puzzle = PUZZLES[currentPuzzle];
+
+  let matched = null;
+  for(const p of placed){
+    if((p.word===word||p.word===wordRev)&&!found.includes(p.word)){
+      matched=p; break;
+    }
+  }
+
+  if(matched){
+    found.push(matched.word);
+    matched.cells.forEach(([r,c])=>foundCells.add(`${r},${c}`));
+    renderGrid();
+    highlightFound(matched.cells);
+    renderWords();
+    updateProgress();
+    if(found.length===puzzle.words.length) setTimeout(showWin,600);
+  } else {
+    currentSelection=[];
+    highlightSelection();
+  }
+}
+
+function highlightFound(cells){
+  cells.forEach(([r,c])=>{
+    const el=document.querySelector(`.cell[data-r="${r}"][data-c="${c}"]`);
+    if(el) el.classList.add('found-cell');
+  });
+}
+
+function showWin(){
+  completed[currentPuzzle]=true;
+  buildList();
+  document.getElementById('win-msg-text').textContent = PUZZLES[currentPuzzle].msg;
+  const btnNext=document.getElementById('btn-next-puzzle');
+  if(currentPuzzle<PUZZLES.length-1){ btnNext.style.display=''; }
+  else { btnNext.style.display='none'; }
+  launchConfetti();
+  show('s-win');
+}
+
+function nextPuzzle(){
+  if(currentPuzzle<PUZZLES.length-1) startPuzzle(currentPuzzle+1);
+}
+
+function launchConfetti(){
+  const colors=['#F4A7B9','#C9B8E8','#FAE3A0','#C8E6DA','#FDDCCC'];
+  for(let i=0;i<50;i++){
+    setTimeout(()=>{
+      const el=document.createElement('div');
+      el.className='confetti-piece';
+      el.style.cssText=`left:${Math.random()*100}vw;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${1.2+Math.random()*1.4}s;animation-delay:${Math.random()*.3}s;border-radius:${Math.random()>.5?'50%':'2px'};`;
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(),2500);
+    },i*18);
+  }
+}
+
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+buildList();
+</script>
+</body>
+</html>
